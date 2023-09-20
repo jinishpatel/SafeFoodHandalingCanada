@@ -11,6 +11,6 @@ Dilpreet
 <br>
 Sonia
 
-<B>Technologies Used:</B><BR>
+<h3>Technologies Used:</h3><BR>
 MERN Stack (MONGODB, EXPRESSJS, REACTJS, NODEJS) <BR>
 Plateform For Hosting (AZURE or Netlify) <BR>
