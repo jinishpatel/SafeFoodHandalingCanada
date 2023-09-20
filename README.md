@@ -1,10 +1,10 @@
 # SafeFoodHandalingCanada
 Wil Project 
-Company Name:DOTCOM
+<h3>Company Name:</h3>DOTCOM
 <br>
-Client: Safe Food Handling Canada
+<h3>Client:</h3> Safe Food Handling Canada
 
-Developer: 
+<h2>Developer: </h2>
 <br>
 Jinish Patel
 <br>
