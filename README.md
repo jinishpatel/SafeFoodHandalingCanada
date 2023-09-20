@@ -5,7 +5,6 @@ Wil Project
 <h3>Client:</h3> Safe Food Handling Canada
 
 <h2>Developer: </h2>
-<br>
 Jinish Patel
 <br>
 Dilpreet
