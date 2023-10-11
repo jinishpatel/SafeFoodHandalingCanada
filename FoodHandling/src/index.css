@@ -1,1 +1,6 @@
 /** @format */
+* {
+	box-sizing: border-box;
+	background-color: black;
+	font-family: 'Open Sans', sans-serif;
+}
