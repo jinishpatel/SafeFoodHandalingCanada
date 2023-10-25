@@ -10,11 +10,22 @@ const navbar = () => {
 					<img src="https://res.cloudinary.com/dg4btcufa/image/upload/v1697056204/Safe%20Food%20Handling%20Canada/kgop012lbfzrwl7jfzj8.png" />
 				</div>
 				<div className="navbar-list">
-					<div className="navbar-item">Home</div>
-					<div className="navbar-item">About</div>
-					<div className="navbar-item">Contact</div>
-					<div className="navbar-item">Course</div>
-					<div className="navbar-item">SignIn/Up</div>
+					<div className="navbar-item">
+						<a href="#">Home</a>
+					</div>
+
+					<div className="navbar-item">
+						<a href="#">About</a>
+					</div>
+					<div className="navbar-item">
+						<a href="#">Contact</a>
+					</div>
+					<div className="navbar-item">
+						<a href="#">Course</a>
+					</div>
+					<div className="navbar-item">
+						<a href="#">SignIn/Up</a>
+					</div>
 				</div>
 			</div>
 		</div>

@@ -3,7 +3,7 @@
 import React from 'react';
 
 const heroimage = () => {
-	return <div>heroimage</div>;
+	return <div className="hero">heroimage</div>;
 };
 
 export default heroimage;
