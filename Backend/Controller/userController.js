@@ -2,45 +2,57 @@
 
 import User from '../Model/userModel.js';
 import crypto from 'crypto';
+import catchAsyncError from '../middleware/catchAsyncError.js';
+import sendToken from '../utils/jwtToken.js';
 
-exports.registerUser = async (req, res, next) => {
+export const registerUser = catchAsyncError(async (req, res, next) => {
 	try {
-		const { username, fistname, lastname, email, password } = req.body;
+		const { username, firstname, lastname, email, password } = req.body;
 		const user = await User.create({
 			username,
-			fistname,
+			firstname,
 			lastname,
 			email,
 			password,
 		});
 
 		console.log('User: ', user);
+		res.status(201).json({ message: 'User created successfully' });
 	} catch (error) {
 		console.log(error);
+		res.status(400).json({ message: 'User not created ' });
 	}
-};
+});
 
-const loginUser = async (req, res) => {
+export const loginUser = catchAsyncError(async (req, res) => {
 	try {
 		const { email, password } = req.body;
 		if (!email || !password) {
-			return res
-				.status(400)
-				.json({ message: 'Please provide Email and password' });
+			return res.status(400).json({
+				success: false,
+				message: 'Please provide Email and password',
+			});
 		}
 		const user = await User.findOne({ email }).select('+password');
 		if (!user) {
-			return res.status(401).json({ message: 'Invalid Email credentials' });
+			return res
+				.status(401)
+				.json({ success: false, message: 'Invalid Email or Password' });
 		}
 		const ispasswordMatched = await user.comparePassword(password);
 		if (!ispasswordMatched) {
-			return res
-				.status(401)
-				.json({ message: 'Invalid Password credentials' });
+			res.status(401).json({
+				success: false,
+				message: 'Invalid Email or Password',
+			});
 		}
+		console.log(user.email + '  login successfully');
+		sendToken(user, 200, res);
 	} catch (error) {
 		console.log(error);
+		res.status(500).json({
+			success: false,
+			message: 'Internal Server Error',
+		});
 	}
-};
-
-// exports.default = { registerUser, loginUser };
+});

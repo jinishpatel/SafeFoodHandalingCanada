@@ -3,12 +3,12 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 import validator from 'validator';
-import jwt from 'jsonwebtoken';
+import JWTToken from 'jsonwebtoken';
 import crypto from 'crypto';
 import { userInfo } from 'os';
 
 const UserSchema = new mongoose.Schema({
-	name: {
+	username: {
 		type: String,
 		required: [true, 'Please enter your name'],
 		maxLength: [30, 'Your name cannot exceed 30 characters'],
@@ -25,7 +25,7 @@ const UserSchema = new mongoose.Schema({
 	},
 	phone: {
 		type: String,
-		required: [true, 'Please enter your phone number'],
+		required: [false, 'Please enter your phone number'],
 		maxLength: [10, 'Your phone number cannot exceed 10 characters'],
 	},
 	email: {
@@ -58,6 +58,8 @@ const UserSchema = new mongoose.Schema({
 		type: Date,
 		default: Date.now,
 	},
+	resetPasswordToken: String,
+	resetPasswordExpire: Date,
 });
 
 UserSchema.pre('save', async function (next) {
@@ -71,6 +73,16 @@ UserSchema.pre('save', async function (next) {
 		next();
 	}
 });
+
+UserSchema.methods.getJWTToken = function () {
+	return JWTToken.sign({ id: this._id }, process.env.JWT_SECRET, {
+		expiresIn: process.env.JWT_EXPIRES_TIME,
+	});
+};
+
+UserSchema.methods.comparePassword = async function (enteredPassword) {
+	return await bcrypt.compare(enteredPassword, this.password);
+};
 
 const User = mongoose.model('User', UserSchema);
 

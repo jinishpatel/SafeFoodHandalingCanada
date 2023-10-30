@@ -70,7 +70,7 @@
 		min-height: 80vh;
 		left: 0;
 		bottom: 0;
-		position: fixed;
+		position: relative;
 		display: flex;
 		flex-direction: column;
 	}
