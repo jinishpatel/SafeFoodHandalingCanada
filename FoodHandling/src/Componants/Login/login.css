@@ -9,7 +9,8 @@
 	height: 100vh; /* This centers the form vertically */
 }
 .form_main {
-	width: 280px;
+	width: 380px;
+	height: 400px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;

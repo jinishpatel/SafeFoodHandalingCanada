@@ -1,6 +1,6 @@
 /** @format */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Navbar from '../BaseWeb/navbar';
 import Footer from '../BaseWeb/footer';
 import './register.css';
@@ -9,14 +9,16 @@ import { PiPasswordBold } from 'react-icons/pi';
 import { HiAtSymbol } from 'react-icons/hi';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
-import { useNavigation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
 import { register_action } from '../../action/useraction';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Cookies from 'js-cookie';
 
 const register = () => {
 	const dispatch = useDispatch();
-	// const navigate = useNavigation();
+	const navigate = useNavigate();
 	const [user, setuser] = useState({
 		username: '',
 		password: '',
@@ -24,6 +26,15 @@ const register = () => {
 		firstname: '',
 		lastname: '',
 	});
+
+	useEffect(() => {
+		const isUserLoggedIn = Cookies.get('userData');
+		if (isUserLoggedIn) {
+			navigate('/'); // Redirect to home page if user is already logged in.
+		} else {
+			navigate('/register');
+		}
+	}, [navigate]);
 	function validateUser(user) {
 		// Implement your validation logic here.
 		// For example, check if required fields are filled, validate email format, etc.
@@ -34,22 +45,33 @@ const register = () => {
 
 		return true; // If all validations pass.
 	}
-	const registerSubmit = (e) => {
+	const registerSubmit = async (e) => {
 		e.preventDefault();
-		const myform = new FormData();
-		myform.set('username', user.username);
-		myform.set('password', user.password);
-		myform.set('firstname', user.firstname);
-		myform.set('lastname', user.lastname);
-		myform.set('email', user.email);
-		if (!validateUser(user)) {
-			toast.error('Validation failed. Please check your input.');
-			return;
-		}
+		try {
+			const myform = new FormData();
+			myform.set('username', user.username);
+			myform.set('password', user.password);
+			myform.set('firstname', user.firstname);
+			myform.set('lastname', user.lastname);
+			myform.set('email', user.email);
+			if (!validateUser(user)) {
+				toast.error('Validation failed. Please check your input.');
+				return;
+			}
 
-		dispatch(register_action(myform));
-		toast.success('Registration successful. Please login.');
-		// navigate('/login');
+			const response = await dispatch(register_action(myform));
+			if (response.success) {
+				Cookies.set('userData', JSON.stringify(response.user));
+				console.log(response);
+				toast.success('Registered Successfully');
+				navigate('/');
+			} else {
+				toast.error('registration failed');
+			}
+		} catch (error) {
+			console.error(error);
+			toast.error('An error occurred while registering.');
+		}
 	};
 
 	return (
@@ -70,6 +92,7 @@ const register = () => {
 							id="username"
 							className="inputField"
 							type="text"
+							required
 							value={user.username}
 							onChange={(e) =>
 								setuser({ ...user, username: e.target.value })
@@ -84,6 +107,7 @@ const register = () => {
 								id="firstname"
 								className="inputField"
 								type="text"
+								required
 								value={user.firstname}
 								onChange={(e) =>
 									setuser({ ...user, firstname: e.target.value })
@@ -94,6 +118,7 @@ const register = () => {
 							<input
 								placeholder="Last Name"
 								id="lastname"
+								required
 								className="inputField"
 								type="text"
 								value={user.lastname}
@@ -109,8 +134,10 @@ const register = () => {
 						<input
 							placeholder="Email"
 							id="email"
+							required
 							className="inputField"
-							type="text"
+							type="Email"
+							pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"
 							value={user.email}
 							onChange={(e) =>
 								setuser({ ...user, email: e.target.value })
@@ -122,8 +149,11 @@ const register = () => {
 						<input
 							placeholder="Password"
 							id="password"
+							required
 							className="inputField"
 							type="password"
+							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
+							title="Password must contain at least 8 characters, including at least one letter, one number, and one special character (@$!%*#?&)"
 							value={user.password}
 							onChange={(e) =>
 								setuser({ ...user, password: e.target.value })

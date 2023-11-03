@@ -1,0 +1,101 @@
+/** @format */
+
+.main-course {
+	padding: 3rem;
+	margin: 2rem;
+}
+.Main-Course-container {
+	width: 100%;
+	height: auto;
+}
+.main-course-part1 {
+	display: flex;
+	flex-direction: row;
+}
+.part1-left {
+	width: 50%;
+	height: auto;
+	padding: 5%;
+}
+.part1-left img {
+	width: 100%;
+	max-height: 80vh;
+}
+.part1-right .border-element {
+	width: 1%;
+	border-left: 1px solid #000;
+	height: 80%;
+}
+.part1-right {
+	width: 50%;
+	height: auto;
+	padding-top: 10%;
+	padding-left: 2%;
+}
+.part1-right h2 {
+	font-size: 3rem;
+	font-weight: 600;
+	margin-bottom: 5px;
+}
+.part1-right p {
+	font-size: 1.2rem;
+	font-weight: 400;
+	padding: 5px;
+}
+.part1-right .purchase-button {
+	margin-top: 15px;
+	background-color: darkgreen;
+}
+.part1-right .purchase-button:hover {
+	background-color: green;
+}
+
+.main-course-part2 {
+	padding: 5%;
+	padding-left: 10%;
+}
+.main-course-part2 h1 {
+	font-size: 3rem;
+	font-weight: 600;
+	margin-bottom: 5px;
+}
+.main-course-part2 p {
+	font-size: 1.2rem;
+	font-weight: 400;
+	padding: 5px;
+}
+.main-course-part2 ul {
+	font-size: 1.5rem;
+	font-weight: 400;
+	padding: 5px 25px 10px 2px;
+}
+.main-course-part2 li {
+	font-size: 1.2rem;
+	font-weight: 400;
+	padding: 5px 25px 10px 2px;
+	list-style-type: square;
+}
+
+@media screen and (max-width: 768px) {
+	.main-course {
+		padding: 1rem;
+		margin: 1rem;
+	}
+	.main-course-part1 {
+		display: flex;
+		flex-direction: column;
+	}
+	.part1-left {
+		width: 100%;
+		height: auto;
+		padding: 5%;
+	}
+	.part1-left img {
+		width: 100%;
+		max-height: 80vh;
+	}
+	.part1-right {
+		width: 100%;
+		height: auto;
+	}
+}
