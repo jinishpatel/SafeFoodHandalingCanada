@@ -1,8 +1,19 @@
 /** @format */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import './navbar.css';
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
+
 const navbar = () => {
+	const navigate = useNavigate();
+	const isUserLoggedIn = Cookies.get('userData');
+
+	const handleLogOut = () => {
+		console.log('logout');
+		Cookies.remove('userData');
+		window.location.href = '/';
+	};
 	return (
 		<div className="navbar-container">
 			<div className="mainbar">
@@ -15,16 +26,20 @@ const navbar = () => {
 					</div>
 
 					<div className="navbar-item">
-						<a href="#">About</a>
+						<a href="/aboutus">About</a>
 					</div>
 					<div className="navbar-item">
-						<a href="#">Contact</a>
+						<a href="/contactus">Contact</a>
 					</div>
 					<div className="navbar-item">
-						<a href="#">Course</a>
+						<a href="/course">Course</a>
 					</div>
 					<div className="navbar-item">
-						<a href="login">SignIn/Up</a>
+						{isUserLoggedIn ? (
+							<a onClick={handleLogOut}>Logout</a>
+						) : (
+							<a href="/login">Login</a>
+						)}
 					</div>
 				</div>
 			</div>

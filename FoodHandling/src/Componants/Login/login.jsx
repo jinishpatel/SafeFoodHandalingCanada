@@ -1,6 +1,6 @@
 /** @format */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Footer from '../BaseWeb/footer';
 import Navbar from '../BaseWeb/navbar';
 import { useNavigate } from 'react-router-dom';
@@ -12,7 +12,7 @@ import { PiPasswordBold } from 'react-icons/pi';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { login_action } from '../../action/useraction';
-
+import Cookies from 'js-cookie';
 const login = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -20,7 +20,14 @@ const login = () => {
 		email: '',
 		password: '',
 	});
-
+	useEffect(() => {
+		const isUserLoggedIn = Cookies.get('userData');
+		if (isUserLoggedIn) {
+			navigate('/'); // Redirect to home page if user is already logged in.
+		} else {
+			navigate('/login');
+		}
+	}, [navigate]);
 	// const { error, loading, isAuthenticated } = useSelector(
 	// 	(state) => state.user,
 	// );
@@ -35,6 +42,14 @@ const login = () => {
 		console.log(user);
 		try {
 			const response = await dispatch(login_action(user));
+			if (response.success) {
+				Cookies.set('userData', JSON.stringify(response.user));
+				console.log(response);
+				toast.success('login Successfully');
+				navigate('/');
+			} else {
+				toast.error('Login failed Try again');
+			}
 			console.log(response);
 		} catch (error) {
 			console.error(error);
@@ -70,8 +85,11 @@ const login = () => {
 						<input
 							placeholder="Username"
 							id="username"
+							required
 							className="inputField"
-							type="text"
+							type="Email"
+							pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"
+							title="check your Email Id"
 							value={user.email}
 							onChange={(e) =>
 								setuser({ ...user, email: e.target.value })
@@ -83,11 +101,12 @@ const login = () => {
 
 						<input
 							placeholder="Password"
+							required
 							id="password"
 							className="inputField"
 							type="password"
-							// pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
-							// title="Password must contain at least 8 characters, including at least one letter, one number, and one special character (@$!%*#?&)"
+							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
+							title="Password must contain at least 8 characters, including at least one letter, one number, and one special character (@$!%*#?&)"
 							value={user.password}
 							onChange={(e) =>
 								setuser({ ...user, password: e.target.value })
