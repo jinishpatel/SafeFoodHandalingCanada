@@ -1,0 +1,22 @@
+/** @format */
+.hero {
+	background-color: #302f2f;
+	width: 100%;
+}
+.hero-image {
+	background-color: #302f2f;
+	object-fit: cover;
+	width: 100%;
+	height: 80vh;
+}
+.footer-brake {
+	padding: 20px;
+}
+@media screen and (max-width: 600px) {
+	.hero-image {
+		background-color: #302f2f;
+		object-fit: cover;
+		width: 100%;
+		height: auto;
+	}
+}
