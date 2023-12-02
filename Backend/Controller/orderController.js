@@ -3,7 +3,7 @@
 import Order from '../Model/orderModel.js';
 
 import catchAsyncError from '../middleware/catchAsyncError.js';
-
+import user from '../Model/userModel.js';
 export const newOrder = catchAsyncError(async (req, res, next) => {
 	const { orderItems, paymentInfo, itemPrice, taxPrice, totalPrice } =
 		req.body;

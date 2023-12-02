@@ -15,15 +15,17 @@ import { SlGraduation } from 'react-icons/Sl';
 import { MdOutlinePriceChange } from 'react-icons/Md';
 import { GrScorecard, GrValidate } from 'react-icons/Gr';
 import { useSelector } from 'react-redux';
-
+import { useNavigate } from 'react-router-dom';
 const Course = () => {
+	const navigate = useNavigate();
 	const { isauthenticated } = useSelector((state) => state.user);
 	console.log(isauthenticated);
 	const purchase_action = () => {
 		if (isauthenticated) {
 			console.log(isauthenticated);
-
-			alert('You are already logged in');
+			navigate('/course/order');
+		} else {
+			navigate('/login');
 		}
 	};
 	return (
