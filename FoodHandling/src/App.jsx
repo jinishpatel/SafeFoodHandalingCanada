@@ -15,6 +15,10 @@ import Course from './Componants/Course/Course';
 import { useDispatch } from 'react-redux';
 import { loadUserState } from './action/useraction';
 import { useEffect } from 'react';
+import { loadStripe } from '@stripe/stripe-js';
+import process from 'process';
+import Course_Order from './Componants/Course/courseOrder';
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
 function App() {
 	const dispatch = useDispatch();
@@ -28,8 +32,14 @@ function App() {
 			<Route path="/login" element={<Login />} />
 			<Route path="/register" element={<Register />} />
 			<Route path="/aboutus" element={<AboutUs />} />
+			<Route
+				path="/payment"
+				stripe={stripePromise}
+				element={<ContactUs />}
+			/>
 			<Route path="/contactus" element={<ContactUs />} />
 			<Route path="/course" element={<Course />} />
+			<Route path="/course/order" element={<Course_Order />} />
 		</Routes>
 	);
 }
