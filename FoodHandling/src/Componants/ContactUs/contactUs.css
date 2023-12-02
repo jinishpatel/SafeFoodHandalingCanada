@@ -122,3 +122,13 @@ button {
 button:hover {
 	background-color: #0056b3;
 }
+
+@media screen and (max-width: 740px) {
+	.contact-details {
+		display: flex;
+		background-color: #7e7c7c;
+
+		justify-content: space-evenly;
+		flex-wrap: wrap;
+	}
+}
